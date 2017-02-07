@@ -1,0 +1,12 @@
+#!/usr/bin/env bash
+
+rm -f $PWD/tmp/pids/server.pid
+docker-compose up&
+trap "kill -SIGINT $!; wait" INT
+if [ -d $HOME/.pow ]; then
+  sleep 10
+  name=$(basename $PWD)
+  port=$(docker-compose port web 3000 | cut -d: -f2)
+  echo $port > $HOME/.pow/$name
+fi
+wait
