@@ -1,1 +1,1 @@
-Little script I use with Rails project running on Docker locally.
+Little bash script I use to start Rails projects running on Docker.
