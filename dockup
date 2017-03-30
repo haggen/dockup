@@ -2,9 +2,11 @@
 
 rm -f $PWD/tmp/pids/server.pid
 docker-compose up&
-trap "kill -SIGINT $!; wait" INT
+trap "kill -SIGINT $!; wait; echo" INT
 if [ -d $HOME/.pow ]; then
-  sleep 10
+  while ! docker-compose port web 3000 >/dev/null 2>&1; do
+    sleep 1
+  done
   name=$(basename $PWD)
   port=$(docker-compose port web 3000 | cut -d: -f2)
   echo $port > $HOME/.pow/$name
